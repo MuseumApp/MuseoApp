@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group
+        android:id="@+id/basso"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/crediti"
+            android:icon="@drawable/crediti"
+            android:title="@string/crediti" />
+        <item
+            android:id="@+id/impostazioni"
+            android:icon="@drawable/impostazioni"
+            android:title="@string/impostazioni" />
+
+    </group>
+</menu>
