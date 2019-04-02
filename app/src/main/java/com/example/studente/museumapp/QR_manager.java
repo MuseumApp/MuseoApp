@@ -42,6 +42,8 @@ public class QR_manager extends AppCompatActivity {
     private final int RequestCam = 1001;
     private Activity activity;
     private Boolean c=false;
+    private  LayoutInflater layoutInflater;
+    private View view;
 
 
 
@@ -51,12 +53,13 @@ public class QR_manager extends AppCompatActivity {
         this.container = container;
         this.context=context;
         this.activity= activity;
+         layoutInflater  = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        this.container.removeAllViews();
+        view = layoutInflater.inflate(R.layout.qr_scanner_layout,container,false);
+        this.container.addView(view);
 
 
     }
-
-
-
 
 
 
@@ -68,11 +71,7 @@ public class QR_manager extends AppCompatActivity {
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
-        LayoutInflater layoutInflater  = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-        View view;
-        container.removeAllViews();
-        view = layoutInflater.inflate(R.layout.qr_scanner_layout,container,false);
-        container.addView(view);
+
 
         surfaceView = view.findViewById(R.id.surfcaceview);
 
@@ -126,15 +125,10 @@ public class QR_manager extends AppCompatActivity {
 
                 if(qrCodes.size() != 0 )
                 {
-                    textView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                          /*  Vibrator vibrator =  (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
-                            vibrator.vibrate(100);*/
+
                             Decode(qrCodes.valueAt(0).displayValue);
 
-                        }
-                    });
+
                 }
             }
         });
@@ -148,7 +142,7 @@ public class QR_manager extends AppCompatActivity {
 
 
             } catch (NumberFormatException e) {
-                textView.setText("Stanza non trovata");
+
                 return;
             }
             if (stanza > new Risorse().getNumero_stanze()) {

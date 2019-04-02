@@ -20,6 +20,7 @@ public class SalaActivity extends AppCompatActivity {
     private String descrizione;
     private ImageView boximamgine;
     private TextView boxtitolo;
+    private ImageView back;
 
 
     @Override
@@ -31,6 +32,7 @@ public class SalaActivity extends AppCompatActivity {
          posizione = getIntent().getIntExtra("posizione",0);
          image = risorse.getImmagine(posizione);
          titolo = risorse.getTitolo(posizione);
+         back = findViewById(R.id.backbutton);
 
 
         boximamgine= findViewById(R.id.imageView4);
@@ -38,6 +40,12 @@ public class SalaActivity extends AppCompatActivity {
         boximamgine.setImageDrawable(getDrawable(image));
         boxtitolo.setText(titolo);
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SalaActivity.super.onBackPressed();
+            }
+        });
 
 
 

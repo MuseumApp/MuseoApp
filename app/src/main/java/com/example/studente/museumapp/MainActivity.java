@@ -1,7 +1,11 @@
 package com.example.studente.museumapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -21,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
 import com.example.studente.museumapp.adapter.NewsAdapter;
@@ -46,7 +51,11 @@ public class MainActivity extends AppCompatActivity {
     private Risorse risorse;
     private final int VERTICAL_ITEM_SPACE = 90;
     private ViewPager viewPager;
+   private  LayoutInflater inflater;
     ProgressDialog progress;
+    private View view;
+    private float   width , height;
+    private String POSITION = "homepage";
 
 
 
@@ -55,24 +64,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle("ciaoooo");
         setContentView(R.layout.activity_main);
+        container = findViewById(R.id.container);
         Fade fade = new Fade();
-        View decor = getWindow().getDecorView();
         getWindow().setEnterTransition(fade);
         getWindow().setExitTransition(fade);
+        inflater = (LayoutInflater) getApplicationContext().getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
+         view = inflater.inflate(R.layout.homepage, container, false);
+        container.removeAllViews();
+        container.addView(view);
 
 
         bottomAppBar = findViewById(R.id.bar);
+
+
         container = findViewById(R.id.container);
         floatingActionButton =  findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 if (bottomAppBar.getFabAlignmentMode() == BottomAppBar.FAB_ALIGNMENT_MODE_CENTER) {
                     bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
                 } else {
                     bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
                 }
+
+
+
+
+
             }
         });
+
 
 
 
@@ -81,14 +103,14 @@ public class MainActivity extends AppCompatActivity {
         risorse= new Risorse();
 
         final NavigationView navigation =  findViewById(R.id.nav_view);
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layouty);
 
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
-                View view = null;
+
+
                 container = findViewById(R.id.container);
                 switch (menuItem.getItemId()) // per ogni item del drawer
                 {
@@ -98,17 +120,21 @@ public class MainActivity extends AppCompatActivity {
                         creaNews(view);
                         container.removeAllViews();
                         container.addView(view);
+                        POSITION = "news";
                         break;
                     case (R.id.stanze):
                         view = inflater.inflate(R.layout.activity_sale, container, false);
                         creaSale( risorse.getTitoli(),risorse.immagini,view );
                         container.removeAllViews();
                         container.addView(view);
+                        POSITION = "stanze";
                         break;
                     case (R.id.sito):
-                        view = inflater.inflate(R.layout.activity_sala, container, false);
+                        view = inflater.inflate(R.layout.homepage, container, false);
                         container.removeAllViews();
                         container.addView(view);
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.gentidabruzzo.com/"));
+                        startActivity(browserIntent);
                         break;
                 }
 
@@ -119,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setSupportActionBar(bottomAppBar);
+
 
         bottomAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     case R.id.qr:
                         apriQr();
-                        System.out.print("va");
+                        POSITION= "qr";
                         break;
                     case R.id.action_settings:
                         break;
@@ -143,6 +170,36 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        ViewTreeObserver vto = bottomAppBar.getViewTreeObserver();
+
+        vto.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                bottomAppBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                 width  = bottomAppBar.getLeft();
+                 height = bottomAppBar.getTop();
+                 System.out.println("x > "+width + "   y> " + height);
+
+            }
+        });
+
+
+        floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                view = inflater.inflate(R.layout.homepage, container, false);
+                container.removeAllViews();
+                container.addView(view);
+                bottomAppBar.setX(width);
+                bottomAppBar.setY(height);
+
+
+
+                return true;
+            }
+        });
+
 
 
     }
@@ -191,11 +248,43 @@ public class MainActivity extends AppCompatActivity {
         QR_manager qr_manager = new QR_manager(container,getApplicationContext(),this);
         qr_manager.displayCamera();
     }
+    @Override
+    public void onBackPressed() {
+        if(POSITION.equals("qr"))
+        {
+
+            System.out.println("--------------------------------------");
+            view = inflater.inflate(R.layout.homepage, container, false);
+            container.removeAllViews();
+            container.addView(view);
+        }
+        else
+        {
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Esci")
+                    .setMessage("Sei sicuro di voler uscire dall'app?")
+                    .setPositiveButton("Si", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+
+                    })
+                    .setNegativeButton("Cancella", null)
+                    .show();
+        }
 
 
 
 
-//ANIMAZIONE
+
+
+
+    }
+
+
 
 
 
