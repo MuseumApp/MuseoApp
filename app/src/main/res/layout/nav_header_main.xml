@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/side_nav_bar"
+    android:background="@color/colorPrimaryDark"
     android:gravity="bottom"
+    android:id="@+id/headerc"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
@@ -13,7 +14,8 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:contentDescription="@string/nav_header_desc" />
+        android:contentDescription="@string/nav_header_desc"
+        android:src="@drawable/logo_museo_completo" />
 
 
 </LinearLayout>

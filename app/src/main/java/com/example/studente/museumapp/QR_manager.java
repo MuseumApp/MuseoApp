@@ -30,6 +30,8 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 import java.util.List;
 
+import static android.view.View.resolveSize;
+
 public class QR_manager extends AppCompatActivity {
 
 
@@ -67,27 +69,35 @@ public class QR_manager extends AppCompatActivity {
     public void displayCamera()
     {
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
+
+
 
 
         surfaceView = view.findViewById(R.id.surfcaceview);
 
+       // System.out.println("w > " + dpWidth + "  e > " + dpHeight);
+
         barcodeDetector = new BarcodeDetector.Builder(context).setBarcodeFormats(Barcode.QR_CODE).build();
 
-        cameraSource = new CameraSource.Builder(context,barcodeDetector).setAutoFocusEnabled(true).setRequestedPreviewSize(width,height).build();
+        cameraSource = new CameraSource.Builder(context,barcodeDetector).setAutoFocusEnabled(true)
+                .setRequestedPreviewSize((int)5000,5000)
+                .build();
+
+
 
 
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
+
+
+
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
                 if(ActivityCompat.checkSelfPermission(context,Manifest.permission.CAMERA) !=
                 PackageManager.PERMISSION_GRANTED)
                 {
                       ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.CAMERA},RequestCam);
+                    displayCamera();
                     return;
                 }
                 else {
@@ -95,6 +105,7 @@ public class QR_manager extends AppCompatActivity {
                     System.out.println("qui entra");
                     try {
                         cameraSource.start(surfaceView.getHolder());
+                        System.out.println("dimension> "+cameraSource.getPreviewSize());
                     } catch (IOException e) {
                         System.out.println("e>" + e.toString());
                     }
@@ -104,8 +115,9 @@ public class QR_manager extends AppCompatActivity {
 
             @Override
             public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
+                System.out.println("w > " + cameraSource.getPreviewSize().getWidth() + "  e > " + cameraSource.getPreviewSize().getHeight());
             }
+
 
             @Override
             public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
@@ -131,8 +143,12 @@ public class QR_manager extends AppCompatActivity {
 
                 }
             }
+
         });
+
+
     }
+
     public void Decode(String a)
     {
         if(!c) {
@@ -157,4 +173,7 @@ public class QR_manager extends AppCompatActivity {
             }
         }
     }
+
+
+
 }

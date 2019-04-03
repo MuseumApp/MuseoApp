@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Rect;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,6 +28,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.studente.museumapp.adapter.NewsAdapter;
@@ -49,13 +56,17 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
     private Risorse risorse;
-    private final int VERTICAL_ITEM_SPACE = 90;
+    private final int VERTICAL_ITEM_SPACE = 30;
     private ViewPager viewPager;
-   private  LayoutInflater inflater;
+   public  LayoutInflater inflater;
     ProgressDialog progress;
-    private View view;
+    public  View view;
     private float   width , height;
-    private String POSITION = "homepage";
+    public String POSITION = "homepage";
+    private int BOTTOM_HEIGHT = 0;
+    private ConstraintLayout constraintLayout;
+    private LinearLayout stanzaHeader;
+    private LinearLayout headerDrawer;
 
 
 
@@ -74,26 +85,16 @@ public class MainActivity extends AppCompatActivity {
         container.addView(view);
 
 
+
+
         bottomAppBar = findViewById(R.id.bar);
+
+
 
 
         container = findViewById(R.id.container);
         floatingActionButton =  findViewById(R.id.fab);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                if (bottomAppBar.getFabAlignmentMode() == BottomAppBar.FAB_ALIGNMENT_MODE_CENTER) {
-                    bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
-                } else {
-                    bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
-                }
-
-
-
-
-
-            }
-        });
+        bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
 
 
 
@@ -130,17 +131,30 @@ public class MainActivity extends AppCompatActivity {
                         POSITION = "stanze";
                         break;
                     case (R.id.sito):
+                        view = inflater.inflate(R.layout.web_view, container, false);
+                        container.removeAllViews();
+                        container.addView(view);
+                        WebView webView =view.findViewById(R.id.webView);
+                        webView.loadUrl("http://www.gentidabruzzo.com/");
+                        webView.setWebViewClient(new WebViewClient() {
+                            @Override
+                            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+
+                                view.loadUrl(request.getUrl().toString());
+                                return false;
+                            }
+                        });
+                        break;
+                    case (R.id.homeDrawer):
                         view = inflater.inflate(R.layout.homepage, container, false);
                         container.removeAllViews();
                         container.addView(view);
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.gentidabruzzo.com/"));
-                        startActivity(browserIntent);
-                        break;
+
                 }
 
                 drawer.closeDrawer(GravityCompat.START);
+                resetBottomBar();
                 return true;
-
             }
         });
 
@@ -172,34 +186,31 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ViewTreeObserver vto = bottomAppBar.getViewTreeObserver();
-
         vto.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 bottomAppBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                  width  = bottomAppBar.getLeft();
                  height = bottomAppBar.getTop();
+                 BOTTOM_HEIGHT = bottomAppBar.getHeight();
                  System.out.println("x > "+width + "   y> " + height);
 
             }
         });
 
 
-        floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
+
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
+            public void onClick(View v) {
                 view = inflater.inflate(R.layout.homepage, container, false);
                 container.removeAllViews();
                 container.addView(view);
-                bottomAppBar.setX(width);
-                bottomAppBar.setY(height);
+                resetBottomBar();
 
-
-
-                return true;
             }
         });
-
 
 
     }
@@ -213,6 +224,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void creaNews(View view) {
         recyclerView = view.findViewById(R.id.recyclerView);
+        constraintLayout = view.findViewById(R.id.newscontainer);
+        System.out.println("BOT > " + BOTTOM_HEIGHT + " a > "+constraintLayout.getMaxHeight());
+        constraintLayout.setMaxHeight(constraintLayout.getMaxHeight()-BOTTOM_HEIGHT);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         URL url = null;
@@ -242,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
         adapter = new SaleAdapter(images,titoli, MainActivity.this);
         recyclerView.setAdapter(adapter);
+
     }
     private void apriQr() {
         Activity activity = (Activity) this;
@@ -257,6 +272,11 @@ public class MainActivity extends AppCompatActivity {
             view = inflater.inflate(R.layout.homepage, container, false);
             container.removeAllViews();
             container.addView(view);
+        }
+        else if(POSITION.equals("newsopened"))
+        {
+            super.onBackPressed();
+
         }
         else
         {
@@ -282,6 +302,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+    }
+    public void resetBottomBar()
+    {
+       bottomAppBar.setX(width);
+       bottomAppBar.setY(height);
     }
 
 

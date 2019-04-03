@@ -6,6 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.example.studente.museumapp.MainActivity;
@@ -60,8 +63,22 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mDataset.get(position)[1]));
-                mainActivity.startActivity(browserIntent);
+                view = mainActivity.inflater.inflate(R.layout.web_view, mainActivity.container, false);
+                mainActivity.container.removeAllViews();
+                mainActivity.container.addView(view);
+                WebView webView =view.findViewById(R.id.webView);
+                webView.loadUrl("http://www.gentidabruzzo.com/");
+                webView.getSettings().setDomStorageEnabled(true);
+                webView.getSettings().setJavaScriptEnabled(true);
+                webView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+
+                        view.loadUrl(request.getUrl().toString());
+                        mainActivity.POSITION = "newsopened";
+                        return false;
+                    }
+                });
             }
         });
     }

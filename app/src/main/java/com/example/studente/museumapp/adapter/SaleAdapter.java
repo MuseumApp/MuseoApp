@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.studente.museumapp.MainActivity;
 import com.example.studente.museumapp.R;
 import com.example.studente.museumapp.SalaActivity;
+import com.xgc1986.ripplebutton.utils.RippleDrawableHelper;
 
 public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.MyViewHolder>{
 
@@ -61,6 +62,7 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.MyViewHolder>{
         @Override
         public void onBindViewHolder(SaleAdapter.MyViewHolder holder, final int position) {
 
+            holder.v.setBackground(RippleDrawableHelper.createRippleDrawable(holder.v, 0x80ffffff, R.color.trasparent));
             holder.sfondo.setImageResource(images[position]);
             holder.sfondo.setTransitionName("prova");
             holder.titolo.setText(titoli[position]);

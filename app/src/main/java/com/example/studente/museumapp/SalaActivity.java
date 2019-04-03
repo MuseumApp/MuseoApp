@@ -1,5 +1,6 @@
 package com.example.studente.museumapp;
 
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -33,6 +34,7 @@ public class SalaActivity extends AppCompatActivity {
          image = risorse.getImmagine(posizione);
          titolo = risorse.getTitolo(posizione);
          back = findViewById(R.id.backbutton);
+        // back.setColorFilter(Color.WHITE);
 
 
         boximamgine= findViewById(R.id.imageView4);

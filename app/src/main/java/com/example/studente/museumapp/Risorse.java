@@ -28,7 +28,7 @@ public class Risorse {
             "Sacralità delle Grotte e Continuità dei Luoghi di Culto",
             "Continuità dei riti sacri e della cultura materiale",
             "Il pastore e il suo corredo",
-            "La capanna in pietra a secco transumanza, insediamenti e produzione della lana",
+            "La capanna in pietra a secco transumanza",
             "I ricoveri, gli stazzi la produzione del formaggio",
             "Il grano: dal seme alla farina",
             "Dall'oliveto all'olio. Produzione e raccolta del fieno",
