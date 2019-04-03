@@ -58,6 +58,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+
         holder.textView.setText(mDataset.get(position)[0]);
         holder.textView2.setText(mDataset.get(position)[2].substring(0,17));
         holder.v.setOnClickListener(new View.OnClickListener() {

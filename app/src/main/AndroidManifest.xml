@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SalaActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".ObjectActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
