@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private Risorse risorse;
     private final int VERTICAL_ITEM_SPACE = 30;
     private ViewPager viewPager;
-   public  LayoutInflater inflater;
+    public  LayoutInflater inflater;
     ProgressDialog progress;
     public  View view;
     private float   width , height;
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         });
                         break;
                     case (R.id.homeDrawer):
-                       ChangeLayout(R.id.homeDrawer , "homepage");
+                       ChangeLayout(R.layout.homepage , "homepage");
 
                 }
 

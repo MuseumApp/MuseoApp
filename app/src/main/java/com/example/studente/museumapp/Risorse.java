@@ -39,11 +39,15 @@ public class Risorse {
             "La Maiolica",
             "Il carcere borbonico e la borghesia",
     };
-    String [] descrizioni = { // descrizioni
+    String [] descrizioniStanza = { // descrizioni
 
 
 
 
+
+    };
+
+    String [] descrizioniOggetti = {
 
     };
 

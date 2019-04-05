@@ -30,11 +30,8 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 import java.util.List;
 
-import static android.view.View.resolveSize;
 
 public class QR_manager extends AppCompatActivity {
-
-
     private SurfaceView surfaceView;
     private CameraSource cameraSource;
     private TextView textView;
@@ -46,10 +43,6 @@ public class QR_manager extends AppCompatActivity {
     private Boolean c=false;
     private  LayoutInflater layoutInflater;
     private View view;
-
-
-
-
     public QR_manager(LinearLayout container , Context context, Activity activity)
     {
         this.container = container;
@@ -62,10 +55,6 @@ public class QR_manager extends AppCompatActivity {
 
 
     }
-
-
-
-
     public void displayCamera()
     {
 
@@ -148,7 +137,6 @@ public class QR_manager extends AppCompatActivity {
 
 
     }
-
     public void Decode(String a)
     {
         if(!c) {
@@ -173,7 +161,4 @@ public class QR_manager extends AppCompatActivity {
             }
         }
     }
-
-
-
 }
