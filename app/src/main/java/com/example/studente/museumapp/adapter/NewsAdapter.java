@@ -64,19 +64,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         holder.v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mainActivity.POSITION = "newsopened";
                 view = mainActivity.inflater.inflate(R.layout.web_view, mainActivity.container, false);
                 mainActivity.container.removeAllViews();
                 mainActivity.container.addView(view);
-                WebView webView =view.findViewById(R.id.webView);
-                webView.loadUrl("http://www.gentidabruzzo.com/");
-                webView.getSettings().setDomStorageEnabled(true);
-                webView.getSettings().setJavaScriptEnabled(true);
-                webView.setWebViewClient(new WebViewClient() {
+                mainActivity.webView =view.findViewById(R.id.webView);
+                mainActivity.webView.loadUrl(mDataset.get(position)[1]);
+                mainActivity.webView.getSettings().setDomStorageEnabled(true);
+                mainActivity.webView.getSettings().setJavaScriptEnabled(true);
+                mainActivity.webView.setWebViewClient(new WebViewClient() {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-
                         view.loadUrl(request.getUrl().toString());
-                        mainActivity.POSITION = "newsopened";
                         return false;
                     }
                 });

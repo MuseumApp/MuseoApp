@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayout;
     private LinearLayout stanzaHeader;
     private LinearLayout headerDrawer;
+    public WebView webView;
 
 
 
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         risorse= new Risorse();
 
         final NavigationView navigation =  findViewById(R.id.nav_view);
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layouty);
+        final DrawerLayout drawer = findViewById(R.id.drawer_layouty);
 
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -116,39 +117,28 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) // per ogni item del drawer
                 {
                     case (R.id.news):
-                        System.out.println("news--------------------------");
-                        view = inflater.inflate(R.layout.activity_news, container, false);
-                        creaNews(view);
-                        container.removeAllViews();
-                        container.addView(view);
-                        POSITION = "news";
+                        ChangeLayout(R.layout.activity_news,"news");
+                        creaNews();
                         break;
                     case (R.id.stanze):
-                        view = inflater.inflate(R.layout.activity_sale, container, false);
-                        creaSale( risorse.getTitoli(),risorse.immagini,view );
-                        container.removeAllViews();
-                        container.addView(view);
-                        POSITION = "stanze";
+                        ChangeLayout(R.layout.activity_sale,"stanze");
+                        creaSale();
+
                         break;
                     case (R.id.sito):
-                        view = inflater.inflate(R.layout.web_view, container, false);
-                        container.removeAllViews();
-                        container.addView(view);
-                        WebView webView =view.findViewById(R.id.webView);
+                        ChangeLayout(R.layout.web_view,"sito");
+                         webView =view.findViewById(R.id.webView);
                         webView.loadUrl("http://www.gentidabruzzo.com/");
                         webView.setWebViewClient(new WebViewClient() {
                             @Override
                             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-
                                 view.loadUrl(request.getUrl().toString());
                                 return false;
                             }
                         });
                         break;
                     case (R.id.homeDrawer):
-                        view = inflater.inflate(R.layout.homepage, container, false);
-                        container.removeAllViews();
-                        container.addView(view);
+                       ChangeLayout(R.id.homeDrawer , "homepage");
 
                 }
 
@@ -193,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
                  width  = bottomAppBar.getLeft();
                  height = bottomAppBar.getTop();
                  BOTTOM_HEIGHT = bottomAppBar.getHeight();
-                 System.out.println("x > "+width + "   y> " + height);
 
             }
         });
@@ -222,10 +211,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void creaNews(View view) {
+    public void creaNews() {
         recyclerView = view.findViewById(R.id.recyclerView);
         constraintLayout = view.findViewById(R.id.newscontainer);
-        System.out.println("BOT > " + BOTTOM_HEIGHT + " a > "+constraintLayout.getMaxHeight());
         constraintLayout.setMaxHeight(constraintLayout.getMaxHeight()-BOTTOM_HEIGHT);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -249,7 +237,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         progress.dismiss();
     }
-    public void creaSale(String[] titoli , int[] images,View view) {
+    public void creaSale() {
+        String[] titoli = risorse.getTitoli();
+        int images [] = risorse.getImmagini();
         recyclerView = view.findViewById(R.id.containerSale);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -259,24 +249,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void apriQr() {
-        Activity activity = (Activity) this;
         QR_manager qr_manager = new QR_manager(container,getApplicationContext(),this);
         qr_manager.displayCamera();
     }
     @Override
     public void onBackPressed() {
+        System.out.println("position > " + POSITION);
         if(POSITION.equals("qr"))
         {
-
-            System.out.println("--------------------------------------");
-            view = inflater.inflate(R.layout.homepage, container, false);
-            container.removeAllViews();
-            container.addView(view);
+            ChangeLayout(R.layout.homepage,"homepage");
         }
         else if(POSITION.equals("newsopened"))
         {
-            super.onBackPressed();
+            if(webView.canGoBack()) {
+                webView.goBack();
+            }
+            else {
+                ChangeLayout(R.layout.activity_news, "news");
+                creaNews();
+            }
+        }
+        else if(POSITION.equals("sito"))
+        {
+            if(webView.canGoBack()) {
+                webView.goBack();
+            }
+            else {
+                ChangeLayout(R.layout.homepage, "homepage");
 
+            }
         }
         else
         {
@@ -308,6 +309,13 @@ public class MainActivity extends AppCompatActivity {
     {
        bottomAppBar.setX(width);
        bottomAppBar.setY(height);
+    }
+    public  void ChangeLayout(int layout , String position)
+    {
+        view = inflater.inflate(layout, container, false);
+        container.removeAllViews();
+        container.addView(view);
+        POSITION = position;
     }
 
 
