@@ -84,35 +84,16 @@ public class MainActivity extends AppCompatActivity {
          view = inflater.inflate(R.layout.homepage, container, false);
         container.removeAllViews();
         container.addView(view);
-
-
-
-
         bottomAppBar = findViewById(R.id.bar);
-
-
-
-
         container = findViewById(R.id.container);
         floatingActionButton =  findViewById(R.id.fab);
         bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
-
-
-
-
-
-
         risorse= new Risorse();
-
         final NavigationView navigation =  findViewById(R.id.nav_view);
         final DrawerLayout drawer = findViewById(R.id.drawer_layouty);
-
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-
-
                 container = findViewById(R.id.container);
                 switch (menuItem.getItemId()) // per ogni item del drawer
                 {
@@ -193,9 +174,11 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view = inflater.inflate(R.layout.homepage, container, false);
-                container.removeAllViews();
-                container.addView(view);
+               if(POSITION.equals("homepage"))
+               {
+                   drawer.openDrawer(GravityCompat.START);
+               }
+                ChangeLayout(R.layout.homepage,"homepage");
                 resetBottomBar();
 
             }
