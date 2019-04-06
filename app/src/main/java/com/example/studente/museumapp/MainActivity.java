@@ -34,6 +34,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.studente.museumapp.adapter.NewsAdapter;
 import com.example.studente.museumapp.adapter.SaleAdapter;
@@ -68,23 +69,48 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout stanzaHeader;
     private LinearLayout headerDrawer;
     public WebView webView;
+    private LinearLayout abruzzoImage;
+    private String urlSito = "http://www.gentidabruzzo.com/";
+    private String urlAles = "http://italessandrini.edu.it/";
+    private View.OnClickListener mapscClickListener,museoclickListener,alesCLickListener;
+    private LinearLayout sitoAlesButt,sitoMuseoButt;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("ciaoooo");
+        setTitle("Museo");
         setContentView(R.layout.activity_main);
         container = findViewById(R.id.container);
         Fade fade = new Fade();
         getWindow().setEnterTransition(fade);
         getWindow().setExitTransition(fade);
         inflater = (LayoutInflater) getApplicationContext().getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
-         view = inflater.inflate(R.layout.homepage, container, false);
-        container.removeAllViews();
-        container.addView(view);
+         ChangeLayout(R.layout.homepage,"homepage");
+         mapscClickListener =new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("maps va");
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(intent);
+
+            }
+        };
+         museoclickListener = new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 apriSito(urlSito);
+             }
+         };
+         alesCLickListener = new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 apriSito(urlAles);
+             }
+         };
         bottomAppBar = findViewById(R.id.bar);
+        resetHomepage();
         container = findViewById(R.id.container);
         floatingActionButton =  findViewById(R.id.fab);
         bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
@@ -107,19 +133,13 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case (R.id.sito):
-                        ChangeLayout(R.layout.web_view,"sito");
-                         webView =view.findViewById(R.id.webView);
-                        webView.loadUrl("http://www.gentidabruzzo.com/");
-                        webView.setWebViewClient(new WebViewClient() {
-                            @Override
-                            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                                view.loadUrl(request.getUrl().toString());
-                                return false;
-                            }
-                        });
+                        apriSito(urlSito);
+
                         break;
                     case (R.id.homeDrawer):
                        ChangeLayout(R.layout.homepage , "homepage");
+                       resetBottomBar();
+                        resetHomepage();
 
                 }
 
@@ -165,11 +185,9 @@ public class MainActivity extends AppCompatActivity {
                  height = bottomAppBar.getTop();
                  BOTTOM_HEIGHT = bottomAppBar.getHeight();
 
+
             }
         });
-
-
-
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,11 +198,26 @@ public class MainActivity extends AppCompatActivity {
                }
                 ChangeLayout(R.layout.homepage,"homepage");
                 resetBottomBar();
-
+                resetHomepage();
             }
         });
 
 
+
+
+    }
+    private void apriSito(String url)
+    {
+        ChangeLayout(R.layout.web_view,"sito");
+        webView =view.findViewById(R.id.webView);
+        webView.loadUrl(url);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                view.loadUrl(request.getUrl().toString());
+                return false;
+            }
+        });
     }
 
     @Override
@@ -259,6 +292,8 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 ChangeLayout(R.layout.homepage, "homepage");
+                resetBottomBar();
+                resetHomepage();
 
             }
         }
@@ -292,6 +327,7 @@ public class MainActivity extends AppCompatActivity {
     {
        bottomAppBar.setX(width);
        bottomAppBar.setY(height);
+
     }
     public  void ChangeLayout(int layout , String position)
     {
@@ -299,10 +335,16 @@ public class MainActivity extends AppCompatActivity {
         container.removeAllViews();
         container.addView(view);
         POSITION = position;
+
     }
-
-
-
-
+    public void resetHomepage()
+    {
+        abruzzoImage = view.findViewById(R.id.mapsbutton);
+        sitoAlesButt = findViewById(R.id.alessbutt);
+        sitoMuseoButt = findViewById(R.id.musobutt);
+        abruzzoImage.setOnClickListener(mapscClickListener);
+        sitoAlesButt.setOnClickListener(alesCLickListener);
+        sitoMuseoButt.setOnClickListener(museoclickListener);
+    }
 
 }
