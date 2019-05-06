@@ -69,7 +69,7 @@ public class QR_manager extends AppCompatActivity {
         barcodeDetector = new BarcodeDetector.Builder(context).setBarcodeFormats(Barcode.QR_CODE).build();
 
         cameraSource = new CameraSource.Builder(context,barcodeDetector).setAutoFocusEnabled(true)
-                .setRequestedPreviewSize((int)5000,5000)
+                .setRequestedPreviewSize(5000,5000)
                 .build();
 
 
@@ -86,6 +86,7 @@ public class QR_manager extends AppCompatActivity {
                 PackageManager.PERMISSION_GRANTED)
                 {
                       ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.CAMERA},RequestCam);
+
                     displayCamera();
                     return;
                 }

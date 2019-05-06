@@ -1,4 +1,4 @@
-package com.example.studente.museumapp.adapter;
+package com.example.studente.museumapp;
 
 import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -10,10 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.studente.museumapp.MainActivity;
-import com.example.studente.museumapp.R;
-import com.example.studente.museumapp.SalaActivity;
 
 
 public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.MyViewHolder>{

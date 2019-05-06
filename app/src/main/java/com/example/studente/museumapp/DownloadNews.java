@@ -1,4 +1,4 @@
-package com.example.studente.museumapp.asyncTasks;
+package com.example.studente.museumapp;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
