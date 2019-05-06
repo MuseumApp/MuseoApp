@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +141,11 @@ public class MainActivity extends AppCompatActivity {
                        ChangeLayout(R.layout.homepage , "homepage");
                        resetBottomBar();
                         resetHomepage();
+                        break;
+                    case (R.id.Itemcrediti):
+
+                        ChangeLayout(R.layout.credits , "credits");
+                        break;
 
                 }
 
@@ -300,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
         else
         {
             new AlertDialog.Builder(this)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setIcon(R.drawable.logo_museo_completo)
                     .setTitle("Esci")
                     .setMessage("Sei sicuro di voler uscire dall'app?")
                     .setPositiveButton("Si", new DialogInterface.OnClickListener()

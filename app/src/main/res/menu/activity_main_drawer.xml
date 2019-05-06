@@ -22,5 +22,18 @@
             android:title="@string/sito" />
 
     </group>
+    <group
+        android:id="@+id/basso"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/Itemcrediti"
+            android:icon="@drawable/crediti"
+            android:title="@string/crediti" />
+        <item
+            android:id="@+id/impostazioni"
+            android:icon="@drawable/impostazioni"
+            android:title="@string/impostazioni" />
+
+    </group>
 
 </menu>
