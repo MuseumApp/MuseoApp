@@ -44,6 +44,7 @@ import com.example.studente.museumapp.asyncTasks.DownloadNews;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     private String urlAles = "http://italessandrini.edu.it/";
     private View.OnClickListener mapscClickListener,museoclickListener,alesCLickListener;
     private LinearLayout sitoAlesButt,sitoMuseoButt;
+    private double latitude = 42.461655;
+    private double longitude = 14.212369;
 
 
 
@@ -93,7 +96,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("maps va");
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                //Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                //startActivity(intent);
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", latitude, longitude,17.5f);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 startActivity(intent);
 
             }
