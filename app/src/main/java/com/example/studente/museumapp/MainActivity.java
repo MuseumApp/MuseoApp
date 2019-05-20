@@ -140,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
 
                         ChangeLayout(R.layout.credits , "credits");
                         break;
+                    case (R.id.qr_main):
+                        apriQr();
+                        POSITION= "qr";
 
                 }
 
@@ -167,8 +170,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.qr:
                         apriQr();
                         POSITION= "qr";
-                        break;
-                    case R.id.action_settings:
                         break;
                 }
 
@@ -262,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
         adapter = new SaleAdapter(images,titoli, MainActivity.this);
         recyclerView.setAdapter(adapter);
+
 
     }
     private void apriQr() {

@@ -6,9 +6,4 @@
         android:title="qr"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_qr_code"/>
-    <item
-        android:id="@+id/action_settings"
-        android:title="Setting"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_menu_manage"/>
 </menu>

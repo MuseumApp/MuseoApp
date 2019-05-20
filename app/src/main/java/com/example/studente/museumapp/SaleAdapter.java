@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 
 public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.MyViewHolder>{
 
@@ -59,7 +61,8 @@ public class SaleAdapter extends RecyclerView.Adapter<SaleAdapter.MyViewHolder>{
         public void onBindViewHolder(SaleAdapter.MyViewHolder holder, final int position) {
 
 
-            holder.sfondo.setImageResource(images[position]);
+            Picasso.get().load(images[position]).placeholder(R.drawable.logo_museo_ridotto).into(holder.sfondo);
+            //holder.sfondo.setImageResource(images[position]);
             holder.sfondo.setTransitionName("prova");
             holder.titolo.setText(titoli[position]);
             final ImageView imagine = holder.sfondo;

@@ -9,56 +9,61 @@
 
     <ImageView
         android:id="@+id/sep1"
-        android:layout_width="100dp"
-        android:layout_height="4dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
-        app:layout_constraintEnd_toEndOf="@+id/titolosala"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="156dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.002"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titolosala"
-        app:layout_constraintVertical_bias="0.368"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.2"
         app:srcCompat="@drawable/divider" />
 
     <ImageView
         android:id="@+id/sep2"
-        android:layout_width="4dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="204dp"
-        android:layout_marginBottom="28dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buottonobj2"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.05"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/openLink"
+        app:layout_constraintStart_toEndOf="@+id/link2"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.002"
         app:srcCompat="@drawable/divider" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:src="@drawable/sala3"
         android:transitionName="prova"
+        app:layout_constraintBottom_toTopOf="@+id/titolosala"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/titolosala"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="16dp"
         android:clickable="true"
         android:text="Titolo"
         android:textAlignment="center"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="23sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
@@ -70,32 +75,35 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView4"
         app:srcCompat="@drawable/ic_baseline_keyboard_backspace_24px" />
 
     <ImageView
         android:id="@+id/buttonobject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginEnd="60dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="24dp"
         android:rotation="180"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buottonobj2"
         app:srcCompat="@drawable/ic_double_arrow_left" />
 
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="61dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/sep2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.58"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHeight_percent="0.50"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sep1">
 
         <LinearLayout
             android:id="@+id/descrizione"
@@ -108,9 +116,9 @@
         android:id="@+id/openLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginStart="53dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:text="Leggi Altro"
         android:textColor="@color/design_default_color_primary"
         android:textSize="18sp"
@@ -122,24 +130,22 @@
         android:id="@+id/buottonobj2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="24dp"
         android:text="Oggetto"
         android:textColor="@color/design_default_color_primary"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonobject"
-        app:layout_constraintStart_toStartOf="@+id/sep2" />
+        app:layout_constraintStart_toEndOf="@+id/sep2" />
 
     <ImageView
         android:id="@+id/link2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/sep2"
+        app:layout_constraintStart_toEndOf="@+id/openLink"
         app:srcCompat="@drawable/ic_internet" />
 
 </android.support.constraint.ConstraintLayout>

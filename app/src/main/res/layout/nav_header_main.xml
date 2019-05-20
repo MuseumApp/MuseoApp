@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:contentDescription="@string/nav_header_desc"
-        android:src="@drawable/logo_museo_completo" />
+        android:src="@drawable/logo_museo_ridotto"/>
 
 
 </LinearLayout>
