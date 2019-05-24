@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">museumapp</string>
+    <string name="app_name">Museo delle genti D\'Abruzzo</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_news">NewsActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -12,9 +12,17 @@
     <string name="sito">Sito</string>
     <string name="impostazioni">Impostazioni</string>
     <string name="crediti">Crediti</string>
-    <string name="provacard">uwowhfoiqwhwdoiqho</string>
     <string name="news">News</string>
     <string name="title_activity_maps">Map</string>
     <string name="homepageTitle">MUSEO DELLE GENTI D\'ABRUZZO</string>
     <string name="qrHeader">Inquadra il codice QR</string>
+    <string name="descrizione">Il museo traccia la storia dell\'uomo in Abruzzo dal suo primo apparire come cacciatore paleolitico sottolineando il contributo offerto dalle tribù Italiche all\'affermazione di Roma, ed una rapida sintesi evidenzia quanto di questo passato si sia tramandato fino a noi in termini di costumi, credenze, luoghi di culto, produzioni, oggetti, forme.</string>
+    <string name="frattabot">Marco Frattarola</string>
+    <string name="zerb">Francesco Gerbasio</string>
+    <string name="cityok">Lorenzo Di Sante</string>
+    <string name="sparta">Marco Carletti</string>
+    <string name="valerio">Valerio Di Zio</string>
+    <string name="ferretti">Davide Ferretti</string>
+    <string name="davide">Davide De Angelis</string>
+    <string name="home">Il museo traccia la storia dell\'uomo in Abruzzo dal suo primo apparire come cacciatore paleolitico sottolineando il contributo  offerto dalle tribù Italiche all\'affermazione di Roma, ed una rapida sintesi evidenziata quanto di questo passato si sia tramandato fino a noi in termini di costumi, credenze, luoghi di culto, produzioni, oggetti, forme. </string>
 </resources>
