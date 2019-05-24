@@ -25,11 +25,11 @@ public class SplashActivity extends AppCompatActivity {
 
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    //if(introManager.check()) //per aprirlo solo la prima volta
-                   // {
-                     //   introManager.setFirstOpen(false);
+                    if(introManager.check()) //per aprirlo solo la prima volta
+                    {
+                        introManager.setFirstOpen(false);
                         intent = new Intent(getApplicationContext(), SliderActivity.class);
-                  //  }
+                    }
 
 
                     startActivity(intent);
