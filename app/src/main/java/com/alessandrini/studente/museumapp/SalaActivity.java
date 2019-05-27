@@ -1,36 +1,36 @@
 package com.alessandrini.studente.museumapp;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RotateDrawable;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.os.Handler;
 import android.transition.Fade;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebResourceRequest;
 
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ceylonlabs.imageviewpopup.ImagePopup;
-
-import org.w3c.dom.Text;
+import com.github.chrisbanes.photoview.PhotoView;
 
 public class SalaActivity extends AppCompatActivity {
 
@@ -39,7 +39,7 @@ public class SalaActivity extends AppCompatActivity {
     private int posizione;
     private String titolo;
     private String descrizione;
-    private ImageView boximamgine;
+    private PhotoView boximamgine;
     private TextView boxtitolo;
     private TextView descizioneTextView;
     private ImageView back;
@@ -61,11 +61,12 @@ public class SalaActivity extends AppCompatActivity {
     public void onBackPressed() {
         if(POSITION.equals("stanza"))
         {
-            super.onBackPressed();
+
             objbutton.clearAnimation();
             openLink2.clearAnimation();
             openLink2.invalidate();
             objbutton.invalidate();
+            super.onBackPressed();
 
             //objbutton.setVisibility(View.INVISIBLE);
             if(!alreadyOpened)
@@ -141,7 +142,7 @@ public class SalaActivity extends AppCompatActivity {
 
             descizioneTextView.setTextSize(20);
             descizioneTextView.setText(descrizione);
-
+            descizioneTextView.setTextColor(Color.parseColor("#696969"));
             descizioneTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
             descrizioneBox.addView(descizioneTextView);
@@ -232,13 +233,15 @@ public class SalaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 /** Initiate Popup view **/
-               // imagePopup.setRotation(90);
+
                 imagePopup.viewPopup();
-
-
 
             }
         });
+
+
+
+
 
 
     }

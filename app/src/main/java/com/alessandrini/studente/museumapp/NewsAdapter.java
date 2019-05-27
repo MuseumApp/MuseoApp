@@ -1,6 +1,6 @@
 package com.alessandrini.studente.museumapp;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +64,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
             @Override
             public void onClick(View view) {
                 mainActivity.POSITION = "newsopened";
+                mainActivity.bottomAppBar.setVisibility(View.INVISIBLE);
                 view = mainActivity.inflater.inflate(R.layout.web_view, mainActivity.container, false);
                 mainActivity.container.removeAllViews();
                 mainActivity.container.addView(view);
@@ -74,7 +75,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
                 mainActivity.webView.setWebViewClient(new WebViewClient() {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                        view.loadUrl(request.getUrl().toString());
+                        try
+                        {
+                            view.loadUrl(request.getUrl().toString());
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+
                         return false;
                     }
                 });

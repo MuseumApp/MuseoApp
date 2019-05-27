@@ -5,14 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
-import android.os.Vibrator;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+
+import androidx.core.view.ViewCompat;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -23,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import android.hardware.Camera.Size;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -31,7 +28,6 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.util.List;
 
 
 public class QR_manager extends AppCompatActivity {
@@ -54,7 +50,7 @@ public class QR_manager extends AppCompatActivity {
         this.activity= activity;
          layoutInflater  = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         this.container.removeAllViews();
-        view = layoutInflater.inflate(R.layout.qr_scanner_layout,container,false);
+        view = layoutInflater.inflate(R.layout.qr_indicator,container,false);
         this.container.addView(view);
         this.imageView = view.findViewById(R.id.qrborders);
 
@@ -113,8 +109,10 @@ public class QR_manager extends AppCompatActivity {
 
             @Override
             public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-                System.out.println("w > " + cameraSource.getPreviewSize().getWidth() + "  e > " + cameraSource.getPreviewSize().getHeight());
+//                System.out.println("w > " + cameraSource.getPreviewSize().getWidth() + "  e > " + cameraSource.getPreviewSize().getHeight());
                 Picasso.get().load(R.drawable.square).into(imageView);
+                imageView.setVisibility(View.INVISIBLE);
+                imageView.setVisibility(View.VISIBLE);
             }
 
 

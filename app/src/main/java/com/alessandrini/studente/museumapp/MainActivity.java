@@ -4,25 +4,28 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.bottomappbar.BottomAppBar;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
+
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+
+import android.renderscript.ScriptIntrinsicLUT;
 import android.transition.Fade;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,10 +34,10 @@ import android.view.ViewTreeObserver;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import com.google.android.gms.maps.model.PointOfInterest;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -43,7 +46,7 @@ import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
-    private BottomAppBar bottomAppBar;
+     BottomAppBar bottomAppBar;
     private FloatingActionButton floatingActionButton;
     public LinearLayout container;
     private RecyclerView recyclerView;
@@ -69,7 +72,10 @@ public class MainActivity extends AppCompatActivity {
     private double latitude = 42.461655;
     private double longitude = 14.212369;
     private int POSIZIONELINK;
-
+    private NestedScrollView scrollView;
+    private TextView deschome;
+    private LinearLayout ccdesc;
+    private ImageView homebg;
 
 
 
@@ -83,11 +89,14 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setEnterTransition(fade);
         getWindow().setExitTransition(fade);
         inflater = (LayoutInflater) getApplicationContext().getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
+
+        floatingActionButton =  findViewById(R.id.fab);
+        bottomAppBar = findViewById(R.id.bar);
+
          ChangeLayout(R.layout.homepage,"homepage");
          mapscClickListener =new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("maps va");
                 //Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                 //startActivity(intent);
                 String uri = String.format(Locale.ENGLISH, "geo:%f,%f", latitude, longitude,18.8f);
@@ -108,10 +117,11 @@ public class MainActivity extends AppCompatActivity {
                  apriSito(urlAles,100);
              }
          };
-        bottomAppBar = findViewById(R.id.bar);
-        resetHomepage();
+
+
+
         container = findViewById(R.id.container);
-        floatingActionButton =  findViewById(R.id.fab);
+
         bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
         risorse= new Risorse();
         final NavigationView navigation =  findViewById(R.id.nav_view);
@@ -132,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case (R.id.sito):
+                        bottomAppBar.setVisibility(View.INVISIBLE);
                         apriSito(urlSito,100);
 
                         break;
@@ -144,40 +155,31 @@ public class MainActivity extends AppCompatActivity {
 
                         ChangeLayout(R.layout.credits , "credits");
                         break;
+                        
+                    case (R.id.impostazioni):
+                        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                        //ChangeLayout(R.layout.settings,"settings");
+                        break;
                     case (R.id.qr_main):
 
                         apriQr();
+                        POSITION= "qr";
 
                 }
 
                 drawer.closeDrawer(GravityCompat.START);
-                resetBottomBar();
+                if(!POSITION.equals("qr") && !POSITION.equals("sito"))
+                 resetBottomBar();
                 return true;
             }
         });
-        int[][] states = new int[][] {
-                new int[] { android.R.attr.state_enabled}, // enabled
-                new int[] {-android.R.attr.state_enabled}, // disabled
-                new int[] {-android.R.attr.state_checked}, // unchecked
-                new int[] { -android.R.attr.state_pressed}  // pressed
-        };
 
-        int[] colors1 = new int[] {
-                R.color.colorPrimary,
-                R.color.colorPrimary,
-                R.color.colorPrimary,
-                R.color.colorPrimary
-        };
-        int[] colors2 = new int[] {
-                R.color.colorPrimary,
-                R.color.colorPrimary,
-                R.color.colorPrimary,
-                R.color.colorPrimary
-        };
 
-       //final ColorStateList myList = new ColorStateList(states, colors1);
-      // final ColorStateList myList2 = new ColorStateList(states, colors2);
-       // bottomAppBar.setBackgroundTint(myList2);
+
+
+
+
 
         setSupportActionBar(bottomAppBar);
 
@@ -216,6 +218,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        resetHomepage();
+        ViewTreeObserver vto2 = ccdesc.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                checkScroll();
+
+            }
+        });
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,7 +246,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View view) {
               //  bottomAppBar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                floatingActionButton.hide();
+                if(!POSITION.equals("sito") && !POSITION.equals("sitolinkstanza") && !POSITION.equals("newsopened"))
+                    floatingActionButton.hide();
                // bottomAppBar.setBackgroundTint(myList);
                 return false;
             }
@@ -276,6 +289,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void apriSito(String url,int position)
     {
+
         if(position  == 100 )
         {
             ChangeLayout(R.layout.web_view,"sito");
@@ -287,13 +301,17 @@ public class MainActivity extends AppCompatActivity {
 
         webView =view.findViewById(R.id.webView);
         webView.loadUrl(url);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+
                 view.loadUrl(request.getUrl().toString());
                 return false;
             }
         });
+
     }
 
     @Override
@@ -305,8 +323,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void creaNews() {
         recyclerView = view.findViewById(R.id.recyclerView);
-        constraintLayout = view.findViewById(R.id.newscontainer);
-        constraintLayout.setMaxHeight(constraintLayout.getMaxHeight()-BOTTOM_HEIGHT);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         URL url = null;
@@ -346,8 +362,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void apriQr() {
+        bottomAppBar.setVisibility(View.INVISIBLE);
+        floatingActionButton.show();
         QR_manager qr_manager = new QR_manager(container,getApplicationContext(),this);
         qr_manager.displayCamera();
+
     }
     @Override
     public void onBackPressed() {
@@ -358,6 +377,8 @@ public class MainActivity extends AppCompatActivity {
         if(POSITION.equals("qr"))
         {
             ChangeLayout(R.layout.homepage,"homepage");
+            resetBottomBar();
+            resetHomepage();
         }
         else if(POSITION.equals("newsopened"))
         {
@@ -441,15 +462,63 @@ public class MainActivity extends AppCompatActivity {
         container.removeAllViews();
         container.addView(view);
         POSITION = position;
+        if(!POSITION.equals("homepage"))
+             floatingActionButton.show();
+        else
+            floatingActionButton.hide();
 
     }
     public void resetHomepage()
     {
         abruzzoImage = view.findViewById(R.id.mapsbutton);
-        sitoAlesButt = findViewById(R.id.alessbutt);
-        sitoMuseoButt = findViewById(R.id.musobutt);
+        sitoAlesButt = view.findViewById(R.id.alessbutt);
+        sitoMuseoButt = view.findViewById(R.id.musobutt);
+        scrollView = view.findViewById(R.id.scrollhome);
+        deschome = view.findViewById(R.id.deschome);
         abruzzoImage.setOnClickListener(mapscClickListener);
         sitoAlesButt.setOnClickListener(alesCLickListener);
         sitoMuseoButt.setOnClickListener(museoclickListener);
+        ccdesc = view.findViewById(R.id.ccdesc);
+        floatingActionButton.hide();
+        homebg =view.findViewById(R.id.abruzzoimage);
+        Picasso.get().load(R.drawable.homeimage).fit().into(homebg);
+
+
+    }
+
+    public void checkScroll()
+    {
+        int counter = 18;
+
+
+        try {
+            ccdesc = view.findViewById(R.id.ccdesc);
+            scrollView = view.findViewById(R.id.scrollhome);
+            deschome = view.findViewById(R.id.deschome);
+            int childHeight = ccdesc.getHeight();
+            boolean isScrollable = scrollView.getHeight() < childHeight + scrollView.getPaddingTop() + scrollView.getPaddingBottom();
+            System.out.println("scoll>" + isScrollable + " h >" + childHeight + " sh >" + scrollView.getHeight() +
+                    " somma> " + childHeight + scrollView.getPaddingTop() + scrollView.getPaddingBottom());
+            System.out.println("h>>" + deschome.getTextSize());
+
+            if (!isScrollable) {
+                deschome.setTextSize(counter + 2);
+                deschome.setGravity(Gravity.CENTER);
+                ccdesc.removeAllViews();
+                ccdesc.addView(deschome);
+
+            }
+        }
+        catch (Exception e)
+        {
+
+
+
+        }
+
+
+
+
+
     }
 }

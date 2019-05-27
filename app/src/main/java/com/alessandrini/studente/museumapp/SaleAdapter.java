@@ -1,10 +1,10 @@
 package com.alessandrini.studente.museumapp;
 
 import android.content.Intent;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;

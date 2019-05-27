@@ -3,9 +3,10 @@
     <color name="colorPrimary">#FFB74D</color>
     <color name="colorPrimaryDark">#ffb74d</color>
     <color name="colorAccent">#D26666</color>
-    <color name="black">#000</color>
+    <color name="black">#000000</color>
     <color name="trasparent">@android:color/transparent</color>
     <color name="tutorialhome">#64A3FF</color>
     <color name="tutorialmappa">#ff66a1</color>
     <color name="tutorialqr">#6666ff</color>
+    <color name="bianco">#fff</color>
 </resources>

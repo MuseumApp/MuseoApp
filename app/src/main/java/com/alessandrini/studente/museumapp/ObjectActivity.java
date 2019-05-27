@@ -4,17 +4,16 @@ package com.alessandrini.studente.museumapp;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.transition.Fade;
 import android.view.Display;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.ceylonlabs.imageviewpopup.ImagePopup;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.squareup.picasso.Picasso;
 
 
@@ -27,7 +26,7 @@ public class ObjectActivity extends AppCompatActivity {
     private String descrizione;
     private LinearLayout linearLayout;
 
-    private ImageView imageView;
+    private PhotoView imageView;
     private TextView titoloOgg;
     private TextView descOgg;
 
@@ -63,11 +62,21 @@ public class ObjectActivity extends AppCompatActivity {
 
         descOgg.setTextSize(20);
         descOgg.setText(descrizione);
-
+        descOgg.setTextColor(Color.parseColor("#696969"));
         descOgg.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         linearLayout.addView(descOgg);
-        Picasso.get().load(image).fit().centerCrop().placeholder(R.drawable.logo_museo_ridotto).into(imageView);
+        try {
+            Picasso.get().load(image).fit().centerCrop().placeholder(R.drawable.logo_museo_ridotto).into(imageView);
+        }
+        catch (Exception e)
+        {
+            imageView.setImageResource(R.drawable.logo_museo_ridotto);
+        }
+
+
+
+
 
 
         try
@@ -109,7 +118,14 @@ public class ObjectActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         /** Initiate Popup view **/
-                        imagePopup.viewPopup();
+                        try {
+                            imagePopup.viewPopup();
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+
 
                     }
                 });

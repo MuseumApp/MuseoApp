@@ -1,10 +1,12 @@
 package com.alessandrini.studente.museumapp;
 
 import android.content.Context;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.viewpager.widget.PagerAdapter;
+
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +35,7 @@ public class Slider extends PagerAdapter {
    };
 
    // descrizioni e sfondi
-    public int[] Backgrounds ={R.color.tutorialhome,R.color.tutorialmappa,R.color.tutorialqr};
+    //public int[] Backgrounds ={R.color.white};
 
 
     public Slider(Context context)
@@ -62,11 +64,11 @@ public class Slider extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.slider,container,false);
         ImageView imageView = view.findViewById(R.id.Imageview1);
         layout = view.findViewById(R.id.relativeLayout);
-        layout.setBackgroundResource(Backgrounds[position]);
+       // layout.setBackgroundResource(Backgrounds[position]);
         textView = view.findViewById(R.id.textView6);
         textView.setText(descrizione[position]);
 
-        Picasso.get().load(Immagini[position]).placeholder(Backgrounds[position]).into(imageView);
+        Picasso.get().load(Immagini[position]).placeholder(R.color.bianco).into(imageView);
         container.addView(view);
         return view;
     }

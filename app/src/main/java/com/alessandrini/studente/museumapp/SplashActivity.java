@@ -3,7 +3,7 @@ package com.alessandrini.studente.museumapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -26,10 +26,10 @@ public class SplashActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     if(introManager.check()) //per aprirlo solo la prima volta
-                    {
+                   {
                         introManager.setFirstOpen(false);
                         intent = new Intent(getApplicationContext(), SliderActivity.class);
-                    }
+                   }
 
 
                     startActivity(intent);
