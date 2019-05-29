@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.alessandrini.studente.museumapp"
-    android:versionCode="2">
+    android:versionCode="8">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -20,7 +20,7 @@
         <activity
             android:name=".SettingsActivity"
             android:label="settings"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".SplashActivity"
             android:label="M.G.A"
