@@ -157,14 +157,14 @@ public class QR_manager extends AppCompatActivity {
 
                 return;
             }
-            if (stanza > new Risorse().getNumero_stanze()) {
+            if (stanza > new Risorse().getNumero_stanze() && stanza < 1) {
                 return;
             } else {
                 //apri stanza
                 c = true;
 
                 Intent intent = new Intent(activity, SalaActivity.class);
-                intent.putExtra("posizione", stanza);
+                intent.putExtra("posizione", stanza-1);
                 activity.startActivity(intent);
             }
         }
