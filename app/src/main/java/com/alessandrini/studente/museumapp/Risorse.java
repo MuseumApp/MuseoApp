@@ -4,7 +4,7 @@ import android.media.Image;
 
             public class Risorse {
 
-    int numero_stanze = 13;
+    int numero_stanze = 14;
 
     int []  immagini = { // immagini delle sale
             R.drawable.sala1,
